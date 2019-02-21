@@ -43,6 +43,7 @@ renderFilterElement(`ARCHIVE`, getRandomNumber(30, 150));
 
 const cardsContainer = document.querySelector(`.board__tasks`);
 
+// Возвращает шаблонную строку - разметки карточки
 const getCard = () => {
   return `
     <article class="card card--pink card--repeat">
@@ -340,13 +341,36 @@ const getCard = () => {
   `;
 };
 
-const renderCards = () => {
-  const amountCards = 7;
+const amountCards = 7;
+const renderCards = (amount) => {
   let i = 0;
-  while (i < amountCards) {
+  while (i < amount) {
     cardsContainer.insertAdjacentHTML(`beforeend`, getCard());
     i += 1;
   }
 }
+renderCards(amountCards);
 
-renderCards();
+
+// Устанавка слушателей событий на заголовки фильтров
+
+const filterLabels = filterElement.querySelectorAll(`.filter__label`);
+const filterLabelsArray = Array.from(filterLabels);
+
+const onClickLabel = (label, func) => {
+  label.addEventListener(`click`, func);
+};
+
+// Вешает обрабтчик на каждый label в цикле
+const setListenersToLabels = () => {
+  let i = 0;
+  while (i < filterLabelsArray.length) {
+    onClickLabel(filterLabelsArray[i], (evt) => {
+      evt.preventDefault();
+      cardsContainer.innerHTML = ``;
+      renderCards(getRandomNumber(1,7));
+    });
+    i += 1;
+  }
+};
+setListenersToLabels();
