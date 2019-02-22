@@ -4,10 +4,7 @@
 
 
 const filterElement = document.querySelector(`.main__filter`);
-const getRandomNumber = (min, max) => Math.round(min - 0.5 + Math.random() * (max - min + 1));
-
-// const getRandomInteger = (min, max) => Math.round(min - 0.5 + Math.random() * (max - min + 1));
-// console.log(getRandomInteger(0, 10));
+const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
 const filters = [
   {
