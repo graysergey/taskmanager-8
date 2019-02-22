@@ -2,41 +2,67 @@
 
 // Отрисовывает заголовки фильтров
 
-const filterElement = document.querySelector(`.main__filter`);
-const getRandomNumber = (min, max) => Math.round(Math.random() * (max - min) + min);
 
-// функция шаблон
-const getFilterElement = (name, amount, isChecked = false, isDisabled = false) => {
+const filterElement = document.querySelector(`.main__filter`);
+const getRandomNumber = (min, max) => Math.round(min - 0.5 + Math.random() * (max - min + 1));
+
+// const getRandomInteger = (min, max) => Math.round(min - 0.5 + Math.random() * (max - min + 1));
+// console.log(getRandomInteger(0, 10));
+
+const filters = [
+  {
+    name: `ALL`,
+    amount: getRandomNumber(5, 30),
+    isChecked: true
+  },
+  {
+    name: `OVERDUE`,
+    amount: getRandomNumber(0, 20),
+    isDisabled: true
+  },
+  {
+    name: `TODAY`,
+    amount: getRandomNumber(0, 10),
+    isDisabled: true
+  },
+  {
+    name: `FAVORITES`,
+    amount: getRandomNumber(5, 20)
+  },
+  {
+    name: `Repeating`,
+    amount: getRandomNumber(20, 50)
+  },
+  {
+    name: `Tags`,
+    amount: getRandomNumber(15, 50)
+  },
+  {
+    name: `ARCHIVE`,
+    amount: getRandomNumber(30, 150)
+  }
+];
+
+// функция шаблон заголовка фильтра
+const getFilterElement = ({name, amount, isChecked = false, isDisabled = false}) => {
   const checkedAttribute = isChecked ? `checked` : ``;
   const disabledAttribute = isDisabled ? `disabled` : ``;
-  const captionElement = name.toLowerCase();
+  const elementCaption = name.toLowerCase();
   return `
     <input
       type="radio"
-      id="filter__${captionElement}"
+      id="filter__${elementCaption}"
       class="filter__input visually-hidden"
       name="filter"
       ${checkedAttribute}
       ${disabledAttribute}
     />
-    <label for="filter__${captionElement}" class="filter__label">
-    ${name} <span class="filter__${captionElement}-count">${amount}</span></label>
+    <label for="filter__${elementCaption}" class="filter__label">
+    ${name} <span class="filter__${elementCaption}-count">${amount}</span></label>
   `;
 };
 
-// Функция вставки в DOM шаблона(разметки), с теми параметрами которые ему прийдут
-const renderFilterElement = (name, amount, checked = false, disabled = false) => {
-  return filterElement.insertAdjacentHTML(`beforeend`, getFilterElement(name, amount, checked, disabled));
-};
-
-// Вызовы функций с нужными параметрами, для вставки шаблона в DOM
-renderFilterElement(`ALL`, getRandomNumber(5, 30), true);
-renderFilterElement(`OVERDUE`, getRandomNumber(0, 20), false, true);
-renderFilterElement(`TODAY`, getRandomNumber(0, 10), false, true);
-renderFilterElement(`FAVORITES`, getRandomNumber(5, 20));
-renderFilterElement(`Repeating`, getRandomNumber(20, 50));
-renderFilterElement(`Tags`, getRandomNumber(15, 50));
-renderFilterElement(`ARCHIVE`, getRandomNumber(30, 150));
+filterElement.insertAdjacentHTML(`beforeend`, filters.map((filter) => getFilterElement(filter)).reduce((acc, item) => acc + item, ``));
 
 
 // Отрисовывает карточки задач
@@ -343,32 +369,23 @@ const getCard = () => {
 
 const amountCards = 7;
 const renderCards = (amount) => {
-  let i = 0;
-  while (i < amount) {
-    cardsContainer.insertAdjacentHTML(`beforeend`, getCard());
-    i += 1;
-  }
-}
+  cardsContainer.insertAdjacentHTML(`beforeend`, getCard().repeat(amount));
+};
 renderCards(amountCards);
-
 
 // Устанавка слушателей событий на заголовки фильтров
 
 const filterLabels = filterElement.querySelectorAll(`.filter__label`);
 const filterLabelsArray = Array.from(filterLabels);
 
-const onClickLabel = (label, func) => {
-  label.addEventListener(`click`, func);
-};
-
 // Вешает обрабтчик на каждый label в цикле
 const setListenersToLabels = () => {
   let i = 0;
   while (i < filterLabelsArray.length) {
-    onClickLabel(filterLabelsArray[i], (evt) => {
+    filterLabelsArray[i].addEventListener(`click`, (evt) => {
       evt.preventDefault();
       cardsContainer.innerHTML = ``;
-      renderCards(getRandomNumber(1,7));
+      renderCards(getRandomNumber(1, 7));
     });
     i += 1;
   }
