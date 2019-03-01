@@ -1,5 +1,13 @@
 const path = require(`path`);
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  plugins: [new HtmlWebpackPlugin()],
+  template: `./public/index.html`,
+  inject: false,
+};
+
 module.exports = {
   mode: `development`,
   entry: `./src/main.js`,
@@ -12,6 +20,6 @@ module.exports = {
     contentBase: path.join(__dirname, `public`),
     publicPath: 'http://localhost:8080/',
     hot: true,
-    compress: true
-  }
+    compress: true,
+  },
 };
