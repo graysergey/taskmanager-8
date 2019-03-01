@@ -1,3 +1,30 @@
+import {taskData} from './task-data';
+import {sortRandomArray} from './utils';
+
+// перебирает хештеги, возвращает разметку
+const getHashTags = () => {
+  let hashTags = [...taskData.tags].map((it) => {
+    return `
+      <li class="card__hashtag-inner">
+        <input
+          type="hidden"
+          name="hashtag"
+          value="repeat"
+          class="card__hashtag-hidden-input"
+        />
+        <button type="button" class="card__hashtag-name">
+          #${it}
+        </button>
+        <button type="button" class="card__hashtag-delete">
+          delete
+        </button>
+      </li>
+    `;
+  }).sort(sortRandomArray).slice(0, 3).reduce((acc, item) => acc + item, ``);
+
+  return hashTags;
+};
+
 // Возвращает шаблонную строку - разметки карточки (задачи)
 export default () => {
   return `
@@ -30,10 +57,7 @@ export default () => {
               <textarea
                 class="card__text"
                 placeholder="Start typing your text here..."
-                name="text"
-              >
-    It is example of repeating task. It marks by wave.</textarea
-              >
+                name="text">${taskData.title}</textarea>
             </label>
           </div>
 
@@ -147,52 +171,9 @@ export default () => {
               </div>
 
               <div class="card__hashtag">
-                <div class="card__hashtag-list">
-                  <span class="card__hashtag-inner">
-                    <input
-                      type="hidden"
-                      name="hashtag"
-                      value="repeat"
-                      class="card__hashtag-hidden-input"
-                    />
-                    <button type="button" class="card__hashtag-name">
-                      #repeat
-                    </button>
-                    <button type="button" class="card__hashtag-delete">
-                      delete
-                    </button>
-                  </span>
-
-                  <span class="card__hashtag-inner">
-                    <input
-                      type="hidden"
-                      name="hashtag"
-                      value="repeat"
-                      class="card__hashtag-hidden-input"
-                    />
-                    <button type="button" class="card__hashtag-name">
-                      #cinema
-                    </button>
-                    <button type="button" class="card__hashtag-delete">
-                      delete
-                    </button>
-                  </span>
-
-                  <span class="card__hashtag-inner">
-                    <input
-                      type="hidden"
-                      name="hashtag"
-                      value="repeat"
-                      class="card__hashtag-hidden-input"
-                    />
-                    <button type="button" class="card__hashtag-name">
-                      #entertaiment
-                    </button>
-                    <button type="button" class="card__hashtag-delete">
-                      delete
-                    </button>
-                  </span>
-                </div>
+                <ul class="card__hashtag-list">
+                  ${getHashTags()}
+                </ul>
 
                 <label>
                   <input

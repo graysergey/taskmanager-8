@@ -1,15 +1,20 @@
 export let taskData = {
   title: [
-    `This is example of new task, you can add picture, set date and time, add tags.`,
-    `It is example of repeating task. It marks by wave.`,
-    `This is card with missing deadline`,
+    `Изучить историю`,
+    `Сделать домашку`,
+    `Пройти интенсив на соточку`,
   ][Math.floor(Math.random() * 3)],
 
-  date: Date.now() + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000,
+  dueDate: Date.now() + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000,
 
   picture: `//picsum.photos/100/100/?r=${Math.random()}`,
 
   tags: new Set([
+    `homework`,
+    `theory`,
+    `practice`,
+    `intensive`,
+    `keks`,
     `cinema`,
     `repeat`,
     `intertaimant`,

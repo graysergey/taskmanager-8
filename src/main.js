@@ -42,12 +42,12 @@ filterElement.insertAdjacentHTML(`beforeend`, filters.map((filter) => getFilter(
 
 
 // Отрисовывает карточки задач
-const amountTasks = 7;
+// const amountTasks = 7;
 const cardsContainer = document.querySelector(`.board__tasks`);
-const renderCards = (amount) => {
-  cardsContainer.insertAdjacentHTML(`beforeend`, getTask().repeat(amount));
+const renderCards = (data) => {
+  cardsContainer.insertAdjacentHTML(`beforeend`, getTask());
 };
-renderCards(amountTasks);
+renderCards();
 
 // Устанавка слушателей событий на заголовки фильтров
 const filterLabels = filterElement.querySelectorAll(`.filter__label`);
