@@ -1,7 +1,7 @@
 import {getRandomInteger} from './utils';
 import getFilter from './get-filter';
-import getTask from './get-task';
-
+import {getTasks} from './get-task';
+import taskData from './task-data';
 const filters = [
   {
     name: `ALL`,
@@ -42,10 +42,10 @@ filterElement.insertAdjacentHTML(`beforeend`, filters.map((filter) => getFilter(
 
 
 // Отрисовывает карточки задач
-// const amountTasks = 7;
+const amountTasks = 7;
 const cardsContainer = document.querySelector(`.board__tasks`);
-const renderCards = (data) => {
-  cardsContainer.insertAdjacentHTML(`beforeend`, getTask());
+const renderCards = () => {
+  cardsContainer.insertAdjacentHTML(`beforeend`, getTasks(taskData, amountTasks));
 };
 renderCards();
 
