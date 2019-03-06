@@ -44,10 +44,10 @@ filterElement.insertAdjacentHTML(`beforeend`, filters.map((filter) => getFilter(
 // Отрисовывает карточки задач
 const amountTasks = 7;
 const cardsContainer = document.querySelector(`.board__tasks`);
-const renderCards = () => {
-  cardsContainer.insertAdjacentHTML(`beforeend`, getTasks(taskData, amountTasks));
+const renderCards = (amount) => {
+  cardsContainer.insertAdjacentHTML(`beforeend`, getTasks(taskData, amount));
 };
-renderCards();
+renderCards(amountTasks);
 
 // Устанавка слушателей событий на заголовки фильтров
 const filterLabels = filterElement.querySelectorAll(`.filter__label`);
