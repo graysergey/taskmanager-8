@@ -1,7 +1,7 @@
 import {getRandomInteger} from './utils';
 import getFilter from './get-filter';
 // import {getTasks} from './get-task';
-import taskData from './task-data';
+import tasksData from './task-data';
 import Task from './Task';
 
 const filters = [
@@ -46,16 +46,19 @@ filterElement.insertAdjacentHTML(`beforeend`, filters.map((filter) => getFilter(
 // Отрисовывает карточки задач
 const amountTasks = 7;
 const cardsContainer = document.querySelector(`.board__tasks`);
-const renderCards = (container, amount) => {
+const renderCards = (tasks, container) => {
   const fragment = document.createDocumentFragment();
-  const task = new Task(taskData);
-  const template = task.template;
-  container.innerHTML = template;
-  // fragment.appendChild(template);
-  // container.appendChild(fragment);
+  tasks.forEach((item) => {
+    const task = new Task(item);
+    const template = task.template;
+    const newElement = document.createElement(`div`);
+    newElement.innerHTML = template;
+    fragment.appendChild(newElement);
+  });
+  container.appendChild(fragment);
 
 };
-renderCards(cardsContainer, amountTasks);
+renderCards(tasksData(amountTasks), cardsContainer);
 
 // Устанавка слушателей событий на заголовки фильтров
 const filterLabels = filterElement.querySelectorAll(`.filter__label`);

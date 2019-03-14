@@ -1,6 +1,6 @@
 import {getRandomBoolean} from './utils';
 
-export default {
+const data = {
   title: [
     `Изучить историю`,
     `Сделать домашку`,
@@ -44,3 +44,5 @@ export default {
 
   isDone: getRandomBoolean(),
 };
+
+export default (number) => [...Array(number)].map(() => data);
