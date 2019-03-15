@@ -9,9 +9,15 @@ export default class Task {
     this._isRepeating = data.isRepeating;
     this._picture = data.picture;
 
+    this._element = null;
     this._state = {
       isEdit: false
     };
+  }
+
+  _onEditbuttonClick() {
+    this._state.isEdit = !this._state.isEdit;
+    this.update();
   }
 
   get template() {
@@ -213,6 +219,32 @@ export default class Task {
           </div>
         </form>
       </article>
-    `;
+    `.trim();
+  }
+
+  render() {
+    const newElement = document.createElement(`div`);
+    newElement.innerHTML = this.template;
+    this._element = newElement.firstChild;
+    this.bind();
+    this.update();
+    return this._element;
+  }
+
+  unrender() {
+    this._element = null;
+  }
+
+  bind() {
+    this._element.querySelector(`.card__btn--edit`)
+        .addEventListener(`click`, this._onEditbuttonClick.bind(this));
+  }
+
+  update() {
+    if (this._state.isEdit) {
+      return this._element.classList.add(`card--edit`);
+    }
+
+    this._element.classList.remove(`card--edit`);
   }
 }
